@@ -79,7 +79,13 @@ class LMDataLoader(object):
             train_indexes = self.inhouse_train_indexes[torch.randperm(n_train)]
         else:
             train_indexes = torch.randperm(len(self.train_qids))
-        return BatchGenerator(self.device, self.batch_size, train_indexes, self.train_qids, self.train_labels, tensors=self.train_data)
+        return BatchGenerator(
+            self.device,
+            self.batch_size,
+            train_indexes,
+            self.train_qids,
+            self.train_labels,
+            tensors=self.train_data)
 
     def train_eval(self):
         return BatchGenerator(self.device, self.eval_batch_size, torch.arange(len(self.train_qids)), self.train_qids, self.train_labels, tensors=self.train_data)

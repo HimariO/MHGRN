@@ -1,5 +1,5 @@
 # dev acc: 0.8010
-python -u grn.py -k 3 \
+IS_REMOTE=1 python3 -u grn.py -k 3 \
         --unfreeze_epoch 3 \
         --format fairseq \
         --fix_trans \

@@ -1,3 +1,4 @@
+import os
 import random
 
 import numpy as np
@@ -23,6 +24,14 @@ def evaluate_accuracy(eval_set, model):
 
 
 def main():
+    if 'IS_REMOTE' in os.environ:
+        import debugpy
+        # Allow other computers to attach to debugpy at this IP address and port.
+        debugpy.listen(('0.0.0.0', 8097))
+        # Pause the program until a remote debugger is attached
+        print('Wait for debug client!')
+        debugpy.wait_for_client()
+
     parser = get_parser()
     args, _ = parser.parse_known_args()
     parser.add_argument('--mode', default='train', choices=['train', 'extract', 'eval', 'pred'], help='run training or evaluation')
