@@ -724,8 +724,13 @@ class LMGraphRelationNetDataLoader(object):
         self.dev_qids, self.dev_labels, *self.dev_encoder_data = load_input_tensors(dev_statement_path, model_type, model_name, max_seq_length, format=format)
 
         num_choice = self.train_encoder_data[0].size(1)
-        *self.train_decoder_data, self.train_adj_data, n_rel = load_adj_data(train_adj_path, max_node_num, num_choice, emb_pk_path=train_embs_path if use_contextualized else None)
-        *self.dev_decoder_data, self.dev_adj_data, n_rel = load_adj_data(dev_adj_path, max_node_num, num_choice, emb_pk_path=dev_embs_path if use_contextualized else None)
+        *self.train_decoder_data, self.train_adj_data, n_rel = load_adj_data(
+            train_adj_path, max_node_num, num_choice,
+            emb_pk_path=train_embs_path if use_contextualized else None)
+        *self.dev_decoder_data, self.dev_adj_data, n_rel = load_adj_data(
+            dev_adj_path, max_node_num, num_choice,
+            emb_pk_path=dev_embs_path if use_contextualized else None)
+        
         assert all(len(self.train_qids) == len(self.train_adj_data) == x.size(0) for x in [self.train_labels] + self.train_encoder_data + self.train_decoder_data)
         assert all(len(self.dev_qids) == len(self.dev_adj_data) == x.size(0) for x in [self.dev_labels] + self.dev_encoder_data + self.dev_decoder_data)
 

@@ -421,7 +421,10 @@ def load_adj_data(adj_pk_path, max_node_num, num_choice, emb_pk_path=None):
           ' qc_num: {:.2f} | ac_num: {:.2f} |'.format((node_type_ids == 0).float().sum(1).mean().item(),
                                                       (node_type_ids == 1).float().sum(1).mean().item()))
 
-    concept_ids, node_type_ids, adj_lengths = [x.view(-1, num_choice, *x.size()[1:]) for x in (concept_ids, node_type_ids, adj_lengths)]
+    concept_ids, node_type_ids, adj_lengths = [
+        x.view(-1, num_choice, *x.size()[1:])
+        for x in (concept_ids, node_type_ids, adj_lengths)
+    ]
     if emb_pk_path is not None:
         emb_data = emb_data.view(-1, num_choice, *emb_data.size()[1:])
     adj_data = list(map(list, zip(*(iter(adj_data),) * num_choice)))
